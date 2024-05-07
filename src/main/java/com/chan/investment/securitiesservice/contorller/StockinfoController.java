@@ -18,27 +18,27 @@ public class StockinfoController {
 
     @GetMapping("")
     public List<StockinfoDTO> getStockinfos() {
-        return stockinfoService.findAll();
+        return stockinfoService.getStockinfos();
     }
 
     @PostMapping("")
     public List<StockinfoDTO> saveStockinfo(@RequestBody List<StockinfoDTO> stockinfoDTOList) {
-        return stockinfoService.saveAll(stockinfoDTOList);
+        return stockinfoService.saveStockinfos(stockinfoDTOList);
     }
 
     @GetMapping("/{name}")
     public StockinfoDTO getStockinfoByName(@PathVariable(value = "name") String name) {
-        return stockinfoService.findByName(name);
+        return stockinfoService.getStockinfoByName(name);
     }
 
     @PutMapping("/{id}")
     public StockinfoDTO updateStockinfo(@PathVariable(value = "id") Long id, @RequestBody StockinfoDTO stockinfoDTO) {
-        return stockinfoService.update(id ,stockinfoDTO);
+        return stockinfoService.updateStockinfo(id ,stockinfoDTO);
     }
 
     @DeleteMapping("")
     public void deleteStockinfo(@RequestBody StockinfoDTO stockinfoDTO) {
-        stockinfoService.delete(stockinfoDTO);
+        stockinfoService.deleteStockinfo(stockinfoDTO);
     }
 
 }

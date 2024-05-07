@@ -2,7 +2,6 @@ package com.chan.investment.securitiesservice.jpa.service;
 
 import com.chan.investment.securitiesservice.exception.EntityNotFoundException;
 import com.chan.investment.securitiesservice.jpa.dto.StockPriceDTO;
-import com.chan.investment.securitiesservice.jpa.dto.StockinfoDTO;
 import com.chan.investment.securitiesservice.jpa.entity.StockPrice;
 import com.chan.investment.securitiesservice.jpa.repository.StockPriceRepository;
 import org.springframework.stereotype.Service;

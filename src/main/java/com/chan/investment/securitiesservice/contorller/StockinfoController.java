@@ -28,7 +28,7 @@ public class StockinfoController {
 
     @GetMapping("/{name}")
     public StockinfoDTO getStockinfoByName(@PathVariable(value = "name") String name) {
-        return stockinfoService.findByname(name);
+        return stockinfoService.findByName(name);
     }
 
     @PutMapping("/{id}")

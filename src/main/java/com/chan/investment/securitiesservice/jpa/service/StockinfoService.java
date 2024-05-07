@@ -1,5 +1,6 @@
 package com.chan.investment.securitiesservice.jpa.service;
 
+import com.chan.investment.securitiesservice.exception.EntityNotFoundException;
 import com.chan.investment.securitiesservice.jpa.dto.StockinfoDTO;
 import com.chan.investment.securitiesservice.jpa.entity.Stockinfo;
 import com.chan.investment.securitiesservice.jpa.repository.StockinfoRepository;
@@ -27,11 +28,17 @@ public class StockinfoService {
     public List<StockinfoDTO> findAll() {
         List<Stockinfo> stockinfos = stockinfoRepository.findAll();
         List<StockinfoDTO> stockinfoDTOs = stockinfos.stream().map(StockinfoDTO::fromEntity).collect(Collectors.toList());
+        if(stockinfoDTOs.isEmpty()){
+            throw new EntityNotFoundException("Stockinfo not found");
+        }
         return stockinfoDTOs;
     }
 
-    public StockinfoDTO findByname(String name) {
+    public StockinfoDTO findByName(String name) {
         Stockinfo stockinfo = stockinfoRepository.findByName(name);
+        if(stockinfo == null){
+            throw new EntityNotFoundException("Name: " + name + " not found");
+        }
         return StockinfoDTO.fromEntity(stockinfo);
     }
 
@@ -43,5 +50,7 @@ public class StockinfoService {
     }
 
     public void delete(StockinfoDTO stockinfoDTO) {
+        Stockinfo stockinfo = StockinfoDTO.toEntity(stockinfoDTO);
+        stockinfoRepository.delete(stockinfo);
     }
 }

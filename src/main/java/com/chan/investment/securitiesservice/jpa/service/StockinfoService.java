@@ -18,14 +18,14 @@ public class StockinfoService {
         this.stockinfoRepository = stockinfoRepository;
     }
 
-    public List<StockinfoDTO> saveAll(List<StockinfoDTO> stockinfoDTOList) {
+    public List<StockinfoDTO> saveStockinfos(List<StockinfoDTO> stockinfoDTOList) {
         List<Stockinfo> stockinfoList = stockinfoDTOList.stream().map(StockinfoDTO::toEntity).collect(Collectors.toList());
         List<Stockinfo> savedStockinfoList = stockinfoRepository.saveAll(stockinfoList);
         List<StockinfoDTO> savedStockinfoDTOList = savedStockinfoList.stream().map(StockinfoDTO::fromEntity).collect(Collectors.toList());
         return savedStockinfoDTOList;
     }
 
-    public List<StockinfoDTO> findAll() {
+    public List<StockinfoDTO> getStockinfos() {
         List<Stockinfo> stockinfos = stockinfoRepository.findAll();
         List<StockinfoDTO> stockinfoDTOs = stockinfos.stream().map(StockinfoDTO::fromEntity).collect(Collectors.toList());
         if(stockinfoDTOs.isEmpty()){
@@ -34,7 +34,7 @@ public class StockinfoService {
         return stockinfoDTOs;
     }
 
-    public StockinfoDTO findByName(String name) {
+    public StockinfoDTO getStockinfoByName(String name) {
         Stockinfo stockinfo = stockinfoRepository.findByName(name);
         if(stockinfo == null){
             throw new EntityNotFoundException("Name: " + name + " not found");
@@ -42,14 +42,14 @@ public class StockinfoService {
         return StockinfoDTO.fromEntity(stockinfo);
     }
 
-    public StockinfoDTO update(Long id, StockinfoDTO stockinfoDTO) {
+    public StockinfoDTO updateStockinfo(Long id, StockinfoDTO stockinfoDTO) {
         stockinfoDTO.setId(id);
         Stockinfo stockinfo = StockinfoDTO.toEntity(stockinfoDTO);
         Stockinfo savedStockinfo = stockinfoRepository.save(stockinfo);
         return StockinfoDTO.fromEntity(savedStockinfo);
     }
 
-    public void delete(StockinfoDTO stockinfoDTO) {
+    public void deleteStockinfo(StockinfoDTO stockinfoDTO) {
         Stockinfo stockinfo = StockinfoDTO.toEntity(stockinfoDTO);
         stockinfoRepository.delete(stockinfo);
     }

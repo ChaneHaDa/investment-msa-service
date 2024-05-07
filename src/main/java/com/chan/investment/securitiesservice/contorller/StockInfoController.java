@@ -28,17 +28,17 @@ public class StockInfoController {
 
     @GetMapping("/{name}")
     public StockInfoDTO getStockinfoByName(@PathVariable(value = "name") String name) {
-        return stockinfoService.getStockinfoByName(name);
+        return stockinfoService.getStockInfoByName(name);
     }
 
     @PutMapping("/{id}")
     public StockInfoDTO updateStockinfo(@PathVariable(value = "id") Long id, @RequestBody StockInfoDTO stockinfoDTO) {
-        return stockinfoService.updateStockinfo(id ,stockinfoDTO);
+        return stockinfoService.updateStockInfo(id ,stockinfoDTO);
     }
 
     @DeleteMapping("")
     public void deleteStockinfo(@RequestBody StockInfoDTO stockinfoDTO) {
-        stockinfoService.deleteStockinfo(stockinfoDTO);
+        stockinfoService.deleteStockInfo(stockinfoDTO);
     }
 
 }

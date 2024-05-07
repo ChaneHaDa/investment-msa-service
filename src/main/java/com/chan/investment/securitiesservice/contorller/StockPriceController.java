@@ -35,8 +35,8 @@ public class StockPriceController {
         return stockPriceService.updateStockPrice(id, stockPriceDTO);
     }
 
-    @DeleteMapping("")
-    public void deleteStockPrice(@RequestBody StockPriceDTO stockPriceDTO) {
-        stockPriceService.deleteStockPrice(stockPriceDTO);
+    @DeleteMapping("/{id}")
+    public void deleteStockPrice(@PathVariable(value = "id") Long id) {
+        stockPriceService.deleteStockPrice(id);
     }
 }

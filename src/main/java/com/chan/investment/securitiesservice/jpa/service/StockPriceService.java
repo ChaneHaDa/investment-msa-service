@@ -7,6 +7,7 @@ import com.chan.investment.securitiesservice.jpa.repository.StockPriceRepository
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,13 +19,12 @@ public class StockPriceService {
         this.stockPriceRepository = stockPriceRepository;
     }
 
-    public List<StockPriceDTO> getStockPricesByNumber(String number) {
-        List<StockPrice> stockPrices = stockPriceRepository.findByNumber(number);
-        if(stockPrices.isEmpty()){
-            throw new EntityNotFoundException("StockPrice not found");
+    public StockPriceDTO getStockPriceById(Long id) {
+        Optional<StockPrice> stockPrice = stockPriceRepository.findById(id);
+        if(stockPrice.isEmpty()){
+            throw new EntityNotFoundException("Id: " + id + " not found");
         }
-        List<StockPriceDTO> stockPriceDTOs = stockPrices.stream().map(StockPriceDTO::fromEntity).collect(Collectors.toList());
-        return stockPriceDTOs;
+        return StockPriceDTO.fromEntity(stockPrice.get());
     }
 
     public List<StockPriceDTO> getStockPrices() {
@@ -33,6 +33,15 @@ public class StockPriceService {
         if(stockPriceDTOs.isEmpty()){
             throw new EntityNotFoundException("StockPrice not found");
         }
+        return stockPriceDTOs;
+    }
+
+    public List<StockPriceDTO> getStockPricesByNumber(String number) {
+        List<StockPrice> stockPrices = stockPriceRepository.findByNumber(number);
+        if(stockPrices.isEmpty()){
+            throw new EntityNotFoundException("StockPrice not found");
+        }
+        List<StockPriceDTO> stockPriceDTOs = stockPrices.stream().map(StockPriceDTO::fromEntity).collect(Collectors.toList());
         return stockPriceDTOs;
     }
 
@@ -50,8 +59,7 @@ public class StockPriceService {
         return StockPriceDTO.fromEntity(savedStockPrice);
     }
 
-    public void deleteStockPrice(StockPriceDTO stockPriceDTO) {
-        StockPrice stockPrice = StockPriceDTO.toEntity(stockPriceDTO);
-        stockPriceRepository.delete(stockPrice);
+    public void deleteStockPrice(Long id) {
+        stockPriceRepository.deleteById(id);
     }
 }

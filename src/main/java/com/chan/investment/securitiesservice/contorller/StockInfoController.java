@@ -36,9 +36,9 @@ public class StockInfoController {
         return stockinfoService.updateStockInfo(id ,stockinfoDTO);
     }
 
-    @DeleteMapping("")
-    public void deleteStockinfo(@RequestBody StockInfoDTO stockinfoDTO) {
-        stockinfoService.deleteStockInfo(stockinfoDTO);
+    @DeleteMapping("/{id}")
+    public void deleteStockinfo(@PathVariable(value = "id") Long id) {
+        stockinfoService.deleteStockinfo(id);
     }
 
 }

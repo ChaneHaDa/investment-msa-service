@@ -3,11 +3,11 @@ package com.chan.investment.securitiesservice.jpa.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "stock_info", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "name"})})
 public class StockInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String number;
     private String name;
 

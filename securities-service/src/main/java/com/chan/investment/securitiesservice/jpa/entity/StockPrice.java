@@ -13,13 +13,13 @@ public class StockPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
-    private long price;
+    private double price;
     private LocalDate date;
 
     public StockPrice() {
     }
 
-    public StockPrice(Long id, String number, long price, LocalDate date) {
+    public StockPrice(Long id, String number, double price, LocalDate date) {
         this.id = id;
         this.number = number;
         this.price = price;
@@ -34,7 +34,7 @@ public class StockPrice {
         return number;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 

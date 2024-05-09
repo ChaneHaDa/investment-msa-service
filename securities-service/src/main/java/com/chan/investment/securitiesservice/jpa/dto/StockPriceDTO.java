@@ -7,13 +7,13 @@ import java.time.LocalDate;
 public class StockPriceDTO {
     private Long id;
     private String number;
-    private long price;
+    private double price;
     private LocalDate date;
 
     public StockPriceDTO() {
     }
 
-    public StockPriceDTO(Long id, String number, long price, LocalDate date) {
+    public StockPriceDTO(Long id, String number, double price, LocalDate date) {
         this.id = id;
         this.number = number;
         this.price = price;
@@ -36,11 +36,11 @@ public class StockPriceDTO {
         this.number = number;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

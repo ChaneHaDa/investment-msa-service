@@ -3,22 +3,22 @@ package com.chan.investment.backtestservice.dto;
 import java.util.List;
 
 public class BacktestItemDTO {
-    private List<Long> priceList;
+    private List<Double> priceList;
     private double weight;
 
     public BacktestItemDTO() {
     }
 
-    public BacktestItemDTO(List<Long> priceList, double weight) {
+    public BacktestItemDTO(List<Double> priceList, double weight) {
         this.priceList = priceList;
         this.weight = weight;
     }
 
-    public List<Long> getPriceList() {
+    public List<Double> getPriceList() {
         return priceList;
     }
 
-    public void setPriceList(List<Long> priceList) {
+    public void setPriceList(List<Double> priceList) {
         this.priceList = priceList;
     }
 

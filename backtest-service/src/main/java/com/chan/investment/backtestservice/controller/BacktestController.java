@@ -22,12 +22,7 @@ public class BacktestController {
 
     @PostMapping
     public BacktestResultDTO getBacktestResult(@RequestBody BacktestItemDTOWrapper backtestItemDTOWrapper) {
-
         return backtestService.getBacktestResult(backtestItemDTOWrapper);
     }
 
-    @GetMapping("/test")
-    public List<Double> test() {
-        return calculatorRestProxy.getRorByList(List.of(1.0, 2.0, 3.0));
-    }
 }

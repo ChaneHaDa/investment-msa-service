@@ -18,29 +18,34 @@ public class BacktestService {
         this.calculatorRestProxy = calculatorRestProxy;
     }
 
-    public double setFormat(double value) {
-        return Math.round(value * 100) / 100.0;
-    }
-
-    public <T extends Number> double getRor(T price1, T price2) {
-        double p1 = price1.doubleValue();
-        double p2 = price2.doubleValue();
-        double ror = (p2 - p1) / p1;
-        return setFormat(ror);
-    }
-
-    public <T extends Number> List<Double> getRorByList(List<T> priceList) {
+    public BacktestResultDTO getBacktestResult(BacktestItemDTOWrapper backtestItemDTOWrapper) {
+        List<BacktestItemDTO> backtestItemDTOList = backtestItemDTOWrapper.getBacktestItemDTOList();
+        List<List<Double>> itemRorList = new ArrayList<>();
+        List<Double> weightList = new ArrayList<>();
         List<Double> rorList = new ArrayList<>();
-        for (int i = 0; i < priceList.size() - 1; i++) {
-            rorList.add(getRor(priceList.get(i), priceList.get(i + 1)));
-        }
-        return rorList;
-    }
 
-//    public BacktestResultDTO getBacktestResult(BacktestItemDTOWrapper backtestItemDTOWrapper){
-//        List<BacktestItemDTO> backtestItemDTOList = backtestItemDTOWrapper.getBacktestItemDTOList();
-//        long amount = backtestItemDTOWrapper.getAmount();
-//        return new BacktestResultDTO(portfolioRorList, totalRor, maxRor, minRor);
-//    }
+        for (BacktestItemDTO backtestItemDTO : backtestItemDTOList) {
+            List<Double> priceList = backtestItemDTO.getPriceList();
+            double weight = backtestItemDTO.getWeight();
+            List<Double> rorListByItem = calculatorRestProxy.getRorByList(priceList);
+            itemRorList.add(rorListByItem);
+            weightList.add(weight);
+        }
+
+        for (int i = 0; i < itemRorList.get(0).size(); i++) {
+            double ror = 0;
+            for (int j = 0; j < itemRorList.size(); j++) {
+                ror += itemRorList.get(j).get(i) * weightList.get(j);
+            }
+            rorList.add(ror);
+        }
+
+        double totalRor = calculatorRestProxy.getTotalRor(rorList);
+        double amount = calculatorRestProxy.getAmountByRor(backtestItemDTOWrapper.getAmount(), totalRor);
+        double maxRor = rorList.stream().mapToDouble(Double::doubleValue).max().orElse(0);
+        double minRor = rorList.stream().mapToDouble(Double::doubleValue).min().orElse(0);
+
+        return new BacktestResultDTO(itemRorList, rorList, totalRor, maxRor, minRor, amount);
+    }
 
 }

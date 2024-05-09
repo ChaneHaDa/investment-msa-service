@@ -37,4 +37,17 @@ public class CalculatorService {
         return this.setFormat(portfolioRor);
     }
 
+    public double getTotalRor(List<Double> rorList){
+        double totalRor = 1;
+        for(Double ror : rorList){
+            totalRor *= (1 + ror);
+        }
+        return this.setFormat(totalRor - 1);
+    }
+
+    public <T extends Number> double getAmountByRor(T Amount, double ror){
+        double amount = Amount.doubleValue();
+        return this.setFormat(amount * (1 + ror));
+    }
+
 }

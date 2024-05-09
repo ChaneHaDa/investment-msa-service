@@ -1,12 +1,8 @@
 package com.chan.investment.calculatorservice.controller;
 
 import com.chan.investment.calculatorservice.dto.PortfolioRorDTO;
-import com.chan.investment.calculatorservice.dto.RorDTO;
 import com.chan.investment.calculatorservice.service.CalculatorService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,23 +16,30 @@ public class CalculatorController {
         this.calculatorService = calculatorService;
     }
 
-    @PostMapping("/ror")
-    public double getRor(@RequestBody RorDTO rorDTO) {
-        double buyPrice = rorDTO.getBuyPrice();
-        double sellPrice = rorDTO.getSellPrice();
+    @PostMapping("/ror/{sellPrice}/{buyPrice}")
+    public double getRor(@PathVariable(value = "sellPrice") double sellPrice, @PathVariable(value = "buyPrice") double buyPrice) {
         return calculatorService.getRor(buyPrice, sellPrice);
     }
 
-    @PostMapping("/rors")
+    @PostMapping("/ror-list")
     public List<Double> getRorByList(@RequestBody List<Double> priceList) {
         return calculatorService.getRorByList(priceList);
     }
 
-    @PostMapping("/portfolio/ror")
+    @PostMapping("/portfolio-ror")
     public double getPortfolioRor(@RequestBody PortfolioRorDTO portfolioRorDTO) {
         List<Double> rorList = portfolioRorDTO.getRorList();
         List<Double> weightList = portfolioRorDTO.getWeightList();
         return calculatorService.getPortfolioRor(rorList, weightList);
     }
 
+    @PostMapping("/total-ror")
+    public double getTotalRor(@RequestBody List<Double> rorList) {
+        return calculatorService.getTotalRor(rorList);
+    }
+
+    @PostMapping("/total-amount/{amount}/{ror}")
+    public double getAmountByRor(@PathVariable(value = "amount") double amount, @PathVariable(value = "ror") double ror) {
+        return calculatorService.getAmountByRor(amount, ror);
+    }
 }

@@ -1,7 +1,7 @@
 package com.chan.investment.portfoliocompositionservice.controller;
 
-import com.chan.investment.portfoliocompositionservice.dto.PortfolioInputDTO;
-import com.chan.investment.portfoliocompositionservice.dto.PortfolioReturnDTO;
+import com.chan.investment.portfoliocompositionservice.dto.PortfolioCompositionInputDTO;
+import com.chan.investment.portfoliocompositionservice.dto.PortfolioCompositionReturnDTO;
 import com.chan.investment.portfoliocompositionservice.service.PortfolioCompostionService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +19,7 @@ public class PortfolioCompostionController {
     }
 
     @PostMapping
-    public PortfolioReturnDTO createPortfolio(@RequestBody PortfolioInputDTO portfolioInputDTO) {
-        return portfolioCompostionService.getPortfolioReturn(portfolioInputDTO);
+    public PortfolioCompositionReturnDTO createPortfolio(@RequestBody PortfolioCompositionInputDTO portfolioCompositionInputDTO) {
+        return portfolioCompostionService.getPortfolioReturn(portfolioCompositionInputDTO);
     }
 }

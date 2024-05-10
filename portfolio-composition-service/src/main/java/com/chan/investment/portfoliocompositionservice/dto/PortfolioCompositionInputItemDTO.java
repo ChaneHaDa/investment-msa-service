@@ -1,19 +1,14 @@
 package com.chan.investment.portfoliocompositionservice.dto;
 
-import java.time.LocalDate;
-import java.util.Map;
-
-public class PortfolioReturnItemDTO {
+public class PortfolioCompositionInputItemDTO {
     private String stock;
-    private Map<LocalDate, Double> price;
     private double weight;
 
-    public PortfolioReturnItemDTO() {
+    public PortfolioCompositionInputItemDTO() {
     }
 
-    public PortfolioReturnItemDTO(String stock, Map<LocalDate, Double> price, double weight) {
+    public PortfolioCompositionInputItemDTO(String stock, double weight) {
         this.stock = stock;
-        this.price = price;
         this.weight = weight;
     }
 
@@ -23,14 +18,6 @@ public class PortfolioReturnItemDTO {
 
     public void setStock(String stock) {
         this.stock = stock;
-    }
-
-    public Map<LocalDate, Double> getPrice() {
-        return price;
-    }
-
-    public void setPrice(Map<LocalDate, Double> price) {
-        this.price = price;
     }
 
     public double getWeight() {

@@ -1,13 +1,13 @@
 package com.chan.investment.portfoliocompositionservice.dto;
 
-public class PortfolioInputItemDTO {
+public class PortfolioCompositionInputItemDTO {
     private String stock;
     private double weight;
 
-    public PortfolioInputItemDTO() {
+    public PortfolioCompositionInputItemDTO() {
     }
 
-    public PortfolioInputItemDTO(String stock, double weight) {
+    public PortfolioCompositionInputItemDTO(String stock, double weight) {
         this.stock = stock;
         this.weight = weight;
     }

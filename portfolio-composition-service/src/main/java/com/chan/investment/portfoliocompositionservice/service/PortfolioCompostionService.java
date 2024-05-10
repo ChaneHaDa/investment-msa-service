@@ -19,30 +19,30 @@ public class PortfolioCompostionService {
         this.securitiesRestProxy = securitiesRestProxy;
     }
 
-    public void validPortfolioInput(PortfolioInputDTO portfolioInputDTO) {
+    public void validPortfolioInput(PortfolioCompositionInputDTO portfolioCompositionInputDTO) {
         double sum = 0;
-        for (PortfolioInputItemDTO portfolioInputItemDTO : portfolioInputDTO.getItems()) {
-            sum += portfolioInputItemDTO.getWeight();
+        for (PortfolioCompositionInputItemDTO portfolioCompositionInputItemDTO : portfolioCompositionInputDTO.getPortfolioItemList()) {
+            sum += portfolioCompositionInputItemDTO.getWeight();
         }
         if(sum != 1) {
             throw new IllegalArgumentException("Sum of weights should be 1");
         }
     }
 
-    public PortfolioReturnItemDTO getPortfolioReturnItem(String stock, double weight) {
+    public PortfolioCompositionReturnItemDTO getPortfolioReturnItem(String stock, double weight) {
         List<StockPriceDTO> stockPriceDTOList = securitiesRestProxy.getStockPrices(stock);
         Map<LocalDate, Double> price = stockPriceDTOList.stream().collect(Collectors.toMap(StockPriceDTO::getDate, StockPriceDTO::getPrice));
-        return new PortfolioReturnItemDTO(stock, price, weight);
+        return new PortfolioCompositionReturnItemDTO(stock, price, weight);
     }
 
-    public PortfolioReturnDTO getPortfolioReturn(PortfolioInputDTO portfolioInputDTO) {
-        this.validPortfolioInput(portfolioInputDTO);
-        List<PortfolioReturnItemDTO> portfolioReturnItemDTOList = new ArrayList<>();
-        for (PortfolioInputItemDTO portfolioInputItemDTO : portfolioInputDTO.getItems()) {
-            PortfolioReturnItemDTO portfolioReturnItemDTO = getPortfolioReturnItem(portfolioInputItemDTO.getStock(), portfolioInputItemDTO.getWeight());
-            portfolioReturnItemDTOList.add(portfolioReturnItemDTO);
+    public PortfolioCompositionReturnDTO getPortfolioReturn(PortfolioCompositionInputDTO portfolioCompositionInputDTO) {
+        this.validPortfolioInput(portfolioCompositionInputDTO);
+        List<PortfolioCompositionReturnItemDTO> portfolioCompositionReturnItemDTOList = new ArrayList<>();
+        for (PortfolioCompositionInputItemDTO portfolioCompositionInputItemDTO : portfolioCompositionInputDTO.getPortfolioItemList()) {
+            PortfolioCompositionReturnItemDTO portfolioCompositionReturnItemDTO = getPortfolioReturnItem(portfolioCompositionInputItemDTO.getStock(), portfolioCompositionInputItemDTO.getWeight());
+            portfolioCompositionReturnItemDTOList.add(portfolioCompositionReturnItemDTO);
         }
-        return new PortfolioReturnDTO(portfolioReturnItemDTOList);
+        return new PortfolioCompositionReturnDTO(portfolioCompositionReturnItemDTOList);
     }
 
 }

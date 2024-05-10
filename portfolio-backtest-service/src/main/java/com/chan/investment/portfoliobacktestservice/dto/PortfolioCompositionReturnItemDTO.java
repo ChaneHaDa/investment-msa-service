@@ -1,17 +1,17 @@
-package com.chan.investment.portfoliocompositionservice.dto;
+package com.chan.investment.portfoliobacktestservice.dto;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-public class PortfolioReturnItemDTO {
+public class PortfolioCompositionReturnItemDTO {
     private String stock;
     private Map<LocalDate, Double> price;
     private double weight;
 
-    public PortfolioReturnItemDTO() {
+    public PortfolioCompositionReturnItemDTO() {
     }
 
-    public PortfolioReturnItemDTO(String stock, Map<LocalDate, Double> price, double weight) {
+    public PortfolioCompositionReturnItemDTO(String stock, Map<LocalDate, Double> price, double weight) {
         this.stock = stock;
         this.price = price;
         this.weight = weight;

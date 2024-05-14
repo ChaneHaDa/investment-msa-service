@@ -6,8 +6,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="portfolio-composition-service", url="localhost:8040/portfolio-composition")
+@FeignClient(name="portfolio-composition-service")
 public interface PortfolioCompositionRestProxy {
-    @PostMapping("")
+    @PostMapping("/portfolio-composition")
     public PortfolioCompositionReturnDTO createPortfolio(@RequestBody PortfolioCompositionInputDTO portofolioCompostionInputDTO);
 }

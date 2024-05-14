@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name="securities-service", url="localhost:8000/stockprice")
+@FeignClient(name="securities-service")
 public interface SecuritiesRestProxy {
-    @GetMapping("/{number}")
+    @GetMapping("/stockprice/{number}")
     public List<StockPriceDTO> getStockPrices(@PathVariable(value = "number") String number);
 }

@@ -6,9 +6,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="backtest-service", url="localhost:8020/backtest")
+@FeignClient(name="backtest-service")
 public interface BacktestRestProxy {
-    @PostMapping
+    @PostMapping("/backtest")
     public BacktestResultDTO getBacktestResult(@RequestBody BacktestItemDTOWrapper backtestItemDTOWrapper);
 
 }

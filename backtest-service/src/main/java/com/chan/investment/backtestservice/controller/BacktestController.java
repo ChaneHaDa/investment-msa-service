@@ -1,7 +1,6 @@
 package com.chan.investment.backtestservice.controller;
 
 import com.chan.investment.backtestservice.dto.BacktestResultDTO;
-import com.chan.investment.backtestservice.proxy.CalculatorRestProxy;
 import com.chan.investment.backtestservice.service.BacktestService;
 import com.chan.investment.backtestservice.wrapper.BacktestItemDTOWrapper;
 import org.springframework.web.bind.annotation.*;

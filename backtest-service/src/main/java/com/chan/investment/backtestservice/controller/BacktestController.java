@@ -13,11 +13,9 @@ import java.util.List;
 public class BacktestController {
 
     private final BacktestService backtestService;
-    private final CalculatorRestProxy calculatorRestProxy;
 
-    public BacktestController(BacktestService backtestService, CalculatorRestProxy calculatorRestProxy) {
+    public BacktestController(BacktestService backtestService) {
         this.backtestService = backtestService;
-        this.calculatorRestProxy = calculatorRestProxy;
     }
 
     @PostMapping

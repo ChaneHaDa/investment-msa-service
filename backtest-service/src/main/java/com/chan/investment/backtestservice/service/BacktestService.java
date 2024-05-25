@@ -2,7 +2,7 @@ package com.chan.investment.backtestservice.service;
 
 import com.chan.investment.backtestservice.dto.BacktestItemDTO;
 import com.chan.investment.backtestservice.dto.BacktestResultDTO;
-import com.chan.investment.backtestservice.proxy.CalculatorRestProxy;
+import com.chan.investment.backtestservice.utils.CalculatorUtils;
 import com.chan.investment.backtestservice.wrapper.BacktestItemDTOWrapper;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +11,6 @@ import java.util.List;
 
 @Service
 public class BacktestService {
-
-    private final CalculatorRestProxy calculatorRestProxy;
-
-    public BacktestService(CalculatorRestProxy calculatorRestProxy) {
-        this.calculatorRestProxy = calculatorRestProxy;
-    }
 
     public BacktestResultDTO getBacktestResult(BacktestItemDTOWrapper backtestItemDTOWrapper) {
         List<BacktestItemDTO> backtestItemDTOList = backtestItemDTOWrapper.getBacktestItemDTOList();
@@ -27,7 +21,7 @@ public class BacktestService {
         for (BacktestItemDTO backtestItemDTO : backtestItemDTOList) {
             List<Double> priceList = backtestItemDTO.getPriceList();
             double weight = backtestItemDTO.getWeight();
-            List<Double> rorListByItem = calculatorRestProxy.getRorByList(priceList);
+            List<Double> rorListByItem = CalculatorUtils.getRorByList(priceList);
             itemRorList.add(rorListByItem);
             weightList.add(weight);
         }
@@ -40,8 +34,8 @@ public class BacktestService {
             rorList.add(ror);
         }
 
-        double totalRor = calculatorRestProxy.getTotalRor(rorList);
-        double amount = calculatorRestProxy.getAmountByRor(backtestItemDTOWrapper.getAmount(), totalRor);
+        double totalRor = CalculatorUtils.getTotalRor(rorList);
+        double amount = CalculatorUtils.getAmountByRor(backtestItemDTOWrapper.getAmount(), totalRor);
         double maxRor = rorList.stream().mapToDouble(Double::doubleValue).max().orElse(0);
         double minRor = rorList.stream().mapToDouble(Double::doubleValue).min().orElse(0);
 

@@ -1,7 +1,6 @@
 package com.chan.investment.backtestservice.controller;
 
 import com.chan.investment.backtestservice.dto.BacktestResultDTO;
-import com.chan.investment.backtestservice.proxy.CalculatorRestProxy;
 import com.chan.investment.backtestservice.service.BacktestService;
 import com.chan.investment.backtestservice.wrapper.BacktestItemDTOWrapper;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +12,9 @@ import java.util.List;
 public class BacktestController {
 
     private final BacktestService backtestService;
-    private final CalculatorRestProxy calculatorRestProxy;
 
-    public BacktestController(BacktestService backtestService, CalculatorRestProxy calculatorRestProxy) {
+    public BacktestController(BacktestService backtestService) {
         this.backtestService = backtestService;
-        this.calculatorRestProxy = calculatorRestProxy;
     }
 
     @PostMapping

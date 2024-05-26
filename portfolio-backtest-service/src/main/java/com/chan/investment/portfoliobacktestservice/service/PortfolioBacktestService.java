@@ -2,7 +2,6 @@ package com.chan.investment.portfoliobacktestservice.service;
 
 import com.chan.investment.portfoliobacktestservice.Wrapper.BacktestItemDTOWrapper;
 import com.chan.investment.portfoliobacktestservice.dto.*;
-import com.chan.investment.portfoliobacktestservice.proxy.BacktestRestProxy;
 import com.chan.investment.portfoliobacktestservice.proxy.PortfolioCompositionRestProxy;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +14,11 @@ import java.util.Map;
 public class PortfolioBacktestService {
 
     private final PortfolioCompositionRestProxy portfolioCompositionRestProxy;
-    private final BacktestRestProxy backtestRestProxy;
+    private final BacktestService backtestService;
 
-    public PortfolioBacktestService(PortfolioCompositionRestProxy portfolioCompositionRestProxy, BacktestRestProxy backtestRestProxy) {
+    public PortfolioBacktestService(PortfolioCompositionRestProxy portfolioCompositionRestProxy, BacktestService backtestService) {
         this.portfolioCompositionRestProxy = portfolioCompositionRestProxy;
-        this.backtestRestProxy = backtestRestProxy;
+        this.backtestService = backtestService;
     }
 
     public PortfolioCompositionReturnDTO createPortfolio(PortfolioCompositionInputDTO portofolioCompostionInputDTO) {
@@ -38,7 +37,7 @@ public class PortfolioBacktestService {
             backtestItemDTOList.add(backtestItemDTO);
         }
         BacktestItemDTOWrapper backtestItemDTOWrapper = new BacktestItemDTOWrapper(backtestItemDTOList, (long) portfolioBacktestInputDTO.getAmount());
-        BacktestResultDTO backtestResultDTO = backtestRestProxy.getBacktestResult(backtestItemDTOWrapper);
+        BacktestResultDTO backtestResultDTO = backtestService.getBacktestResult(backtestItemDTOWrapper);
 
         PortfolioBacktestReturnDTO portfolioBacktestReturnDTO = new PortfolioBacktestReturnDTO(portfolioBacktestInputDTO.getName(), portfolioCompositionReturnDTO, backtestResultDTO);
 

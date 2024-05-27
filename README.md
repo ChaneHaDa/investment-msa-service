@@ -4,6 +4,9 @@
 * 투자에 도움을 주는 서비스 구현하자
 * Micro Service Architecture를 이용하여 서비스를 구현
   
+ <img width="936" alt="image" src="https://github.com/ChaneHaDa/investment-msa-service/assets/140226331/151427c2-c893-4808-b955-a531bb5525ac">
+
+  
 ### 사용 기술 및 환경
 * WSL2, JAVA 17, Gradle
 * Spring Boot, JPA
@@ -67,42 +70,21 @@
 * (POST) /portfolio-composition
 ### Service call
 * securities-service
-  
-## calculator-service
-* **PORT:8030**
-* 각종 계산을 위한 서비스
-* 수익률 계산, 총액 계산 등의 기능 
-### DTO
-* PortfolioRorDTO(List<Double> rorList, List<Double> weightList)
-### URLS
-* (POST) /calculator/ror/{sellPrice}/{buyPrice}
-* (POST) /calculator/ror-list
-* (POST) /calculator/portfolio-ror
-* (POST) /calculator/total-ror
-* (POST) /calculator/total-amount/{amount}/{ror}
-  
-## backtest-service
-* **PORT:8020**
-* 백테스트를 수행하는 서비스
-* 가격, 비중으로 이루어진 포트폴리오를 받아서 백테스트를 수행
-### DTO
-* BacktestItemDTO(List<Double> priceList, double weight)
-* BacktestResultDTO(List<List<Double>> itemRorList, List<Double> rorList, double totalRor, double maxRor, double minRor, double amount): itemRorList는 item별 수익률
-* PortfolioRorDTO(List<Double> rorList, List<Double> weightList)
-### URLS
-* (POST) /backtest
-### Service call
-* calculator-service
-  
+
 ## portfolio-backtest-service
 * **PORT:8050**
 * 포트폴리오를 구성해서 백테스트를 수행하고 결과를 반환하는 서비스
+* **기존에 존재하던, backtest-service, calculator-service를 통합함**
 ### DTO
 * PortfolioBacktestInputDTO(String name, double amount, List<PortfolioBacktestInputItemDTO> portfolioItemList)
 * PortfolioBacktestInputItemDTO(String stock, double weight)
 * PortfolioBacktestReturnDTO(String name, PortfolioCompositionReturnDTO portfolioCompositionReturnDTO, BacktestResultDTO backtestResultDTO)
+* BacktestItemDTO(List<Double> priceList, double weight)
+* BacktestResultDTO(List<List<Double>> itemRorList, List<Double> rorList, double totalRor, double maxRor, double minRor, double amount): itemRorList는 item별 수익률
+* PortfolioRorDTO(List<Double> rorList, List<Double> weightList)
 ### URLS
 * (POST) /portfolio-backtest
 ### Service call
-* backtest-service
 * portfolio-composition-service
+
+

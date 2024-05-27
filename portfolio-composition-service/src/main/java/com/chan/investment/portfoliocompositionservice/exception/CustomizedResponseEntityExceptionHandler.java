@@ -1,8 +1,5 @@
 package com.chan.investment.portfoliocompositionservice.exception;
 
-import feign.FeignException;
-import jakarta.ws.rs.InternalServerErrorException;
-import jakarta.ws.rs.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

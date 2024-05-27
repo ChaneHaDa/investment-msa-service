@@ -27,9 +27,12 @@ public class CustomErrorDecoder implements ErrorDecoder {
             case 404:
                 return new EntityNotFoundException(message);
             case 500:
+                System.out.println("default error");
                 return new InternalServerErrorException("feign connection error");
             default:
+                System.out.println("default error");
                 return defaultErrorDecoder.decode(methodKey, response);
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.chan.investment.portfoliocompositionservice.exception;
+package com.chan.investment.portfoliobacktestservice.exception;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +24,8 @@ public class CustomErrorDecoder implements ErrorDecoder {
         }
 
         switch (response.status()) {
+            case 400:
+                return new IllegalArgumentException(message);
             case 404:
                 return new EntityNotFoundException(message);
             case 500:

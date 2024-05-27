@@ -1,7 +1,14 @@
 package com.chan.investment.portfoliocompositionservice.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class PortfolioCompositionInputItemDTO {
+    @NotBlank
     private String stock;
+    @Min(0)
+    @Max(1)
     private double weight;
 
     public PortfolioCompositionInputItemDTO() {

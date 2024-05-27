@@ -1,8 +1,11 @@
 package com.chan.investment.portfoliocompositionservice.dto;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 public class PortfolioCompositionInputDTO {
+    @Valid
     private List<PortfolioCompositionInputItemDTO> portfolioItemList;
 
     public PortfolioCompositionInputDTO() {

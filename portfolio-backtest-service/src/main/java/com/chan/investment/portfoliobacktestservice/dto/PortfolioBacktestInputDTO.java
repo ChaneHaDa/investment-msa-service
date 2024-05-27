@@ -1,10 +1,16 @@
 package com.chan.investment.portfoliobacktestservice.dto;
 
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 import java.util.List;
 
 public class PortfolioBacktestInputDTO {
+    @NotBlank
     private String name;
+    @Positive
     private double amount;
     private List<PortfolioBacktestInputItemDTO> portfolioItemList;
 

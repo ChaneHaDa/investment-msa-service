@@ -18,27 +18,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement((sessionManagement) ->
-                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+//        http.sessionManagement((sessionManagement) ->
+//                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        );
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
-                );
-
+                )
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("admin")
-                .password(passwordEncoder().encode("12345"))
-                .roles("admin")
-                .build();
-        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean

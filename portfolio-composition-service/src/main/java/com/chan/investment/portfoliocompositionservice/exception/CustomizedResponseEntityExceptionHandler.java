@@ -22,14 +22,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public final ResponseEntity<ErrorDetails> handleIllegalArgumentException(Exception ex, WebRequest request) throws Exception {
-        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
-                ex.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(EntityNotFoundException.class)
     public final ResponseEntity<ErrorDetails> handleNotFoundException(Exception ex, WebRequest request) throws Exception {
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),

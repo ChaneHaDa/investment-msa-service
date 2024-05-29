@@ -1,5 +1,6 @@
 package com.chan.investment.authorization_server.jpa.service;
 
+import com.chan.investment.authorization_server.jpa.dto.CustomerDTO;
 import com.chan.investment.authorization_server.jpa.entity.Customer;
 import com.chan.investment.authorization_server.jpa.repository.CustomerRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,8 +16,11 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Customer register(Customer customer) {
-        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        return customerRepository.save(customer);
+    public CustomerDTO createCustomer(CustomerDTO customer) {
+        Customer _customer = new Customer();
+        _customer.setUsername(customer.getUsername());
+        _customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        _customer.setRole("USER");
+        return CustomerDTO.fromEntity(customerRepository.save(_customer));
     }
 }

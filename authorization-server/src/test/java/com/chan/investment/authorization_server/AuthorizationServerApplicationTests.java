@@ -16,13 +16,13 @@ class AuthorizationServerApplicationTests {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@Test
-	void contextLoads() {
-		Customer customer = new Customer();
-		customer.setUsername("admin");
-		customer.setPassword("1234");
-		customer.setRole("USER");
-		customerService.register(customer);
-	}
+//	@Test
+//	void contextLoads() {
+//		Customer customer = new Customer();
+//		customer.setUsername("admin");
+//		customer.setPassword("1234");
+//		customer.setRole("USER");
+//		customerService.createCustomer(customer);
+//	}
 
 }

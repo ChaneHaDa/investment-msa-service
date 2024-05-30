@@ -8,7 +8,6 @@ public class CustomerDTO {
     @NotBlank
     private String username;
     @NotBlank
-    @JsonIgnore
     private String password;
 
     public CustomerDTO() {

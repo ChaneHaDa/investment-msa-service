@@ -21,26 +21,6 @@ public class ApiGateWayConfig {
                     return r.path("/stockprice/**", "/stockinfo/**")
                             .uri("lb://SECURITIES-SERVICE");
                 })
-                .route("calculator-service-openapi", r -> {
-                    return r.path("/api/calculator-service/v3/api-docs/**")
-                            .filters(f -> f.rewritePath(
-                                    "/api/calculator-service/(?<path>.*)", "/${path}"))
-                            .uri("lb://CALCULATOR-SERVICE");
-                })
-                .route("calculator-service", r -> {
-                    return r.path("/calculator/**")
-                            .uri("lb://CALCULATOR-SERVICE");
-                })
-                .route("backtest-service-openapi", r -> {
-                    return r.path("/api/backtest-service/v3/api-docs/**")
-                            .filters(f -> f.rewritePath(
-                                    "/api/backtest-service/(?<path>.*)", "/${path}"))
-                            .uri("lb://BACKTEST-SERVICE");
-                })
-                .route("backtest-service", r -> {
-                    return r.path("/backtest/**")
-                            .uri("lb://BACKTEST-SERVICE");
-                })
                 .route("portfolio-backtest-service-openapi", r -> {
                     return r.path("/api/portfolio-backtest-service/v3/api-docs/**")
                             .filters(f -> f.rewritePath(

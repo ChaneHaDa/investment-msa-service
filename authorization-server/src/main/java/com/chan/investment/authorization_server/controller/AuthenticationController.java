@@ -5,6 +5,7 @@ import com.chan.investment.authorization_server.dto.AuthorizationReturnDTO;
 import com.chan.investment.authorization_server.jpa.dto.CustomerDTO;
 import com.chan.investment.authorization_server.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationConfiguration authenticationConfiguration;
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    public AuthenticationController(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/authenticaion")
     public ResponseEntity<AuthenticateReturnDTO> authenticate(@RequestBody CustomerDTO customerDTO) throws Exception {
@@ -29,8 +32,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticateReturnDTO(jwt, jwtUtil.extractExpiration(jwt).toString()));
     }
 
-    @GetMapping("/authorization")
-    public ResponseEntity<?> authorization(@RequestParam("token") String token) {
+    @PostMapping("/authorization")
+    public ResponseEntity<AuthorizationReturnDTO> authorization(@RequestHeader HttpHeaders header) {
+        String token = header.getFirst("Authorization").replace("Bearer ", "");
         String username = jwtUtil.extractUsername(token);
         AuthorizationReturnDTO authorizationReturnDTO;
         if(jwtUtil.validateToken(token, username)){
@@ -38,7 +42,6 @@ public class AuthenticationController {
         } else {
             authorizationReturnDTO = new AuthorizationReturnDTO("Unauthorized", username);
         }
-
         return ResponseEntity.ok(authorizationReturnDTO);
     }
 

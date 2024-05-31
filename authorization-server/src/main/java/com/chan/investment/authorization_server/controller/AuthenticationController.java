@@ -29,7 +29,11 @@ public class AuthenticationController {
         Authentication authentication = new UsernamePasswordAuthenticationToken(customerDTO.getUsername(), customerDTO.getPassword());
         authentication = authenticationConfiguration.getAuthenticationManager().authenticate(authentication);
         String jwt = jwtUtil.generateToken(authentication.getName());
-        return ResponseEntity.ok(new AuthenticateReturnDTO(jwt, jwtUtil.extractExpiration(jwt).toString()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + jwt);
+
+        return ResponseEntity.ok().headers(headers).body(new AuthenticateReturnDTO(jwt, jwtUtil.extractExpiration(jwt).toString()));
     }
 
     @PostMapping("/authorization")

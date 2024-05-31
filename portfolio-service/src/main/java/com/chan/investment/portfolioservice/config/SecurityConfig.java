@@ -15,6 +15,9 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/api-docs", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/portfolioItem/**").hasRole("USER")
+                .requestMatchers("/portfolio/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
         );
 

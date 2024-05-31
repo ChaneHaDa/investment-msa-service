@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(unique = true)
     private String username;
     private String password;
@@ -15,7 +15,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(long id, String username, String password, String role) {
+    public Customer(Long id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;

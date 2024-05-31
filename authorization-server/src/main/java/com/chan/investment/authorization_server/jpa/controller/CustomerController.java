@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authorization/customer")
+@RequestMapping("/customer")
 public class CustomerController {
 
     private final CustomerService customerService;

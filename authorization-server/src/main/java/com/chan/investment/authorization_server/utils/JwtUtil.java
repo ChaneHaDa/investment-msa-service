@@ -19,7 +19,7 @@ public class JwtUtil {
         if(username.equals("admin")){
             return Jwts.builder().setSubject("Authorization-server")
                     .claim("username", username)
-                    .claim("authorities", "ROLE_ADMIN")
+                    .claim("authorities", "ROLE_ADMIN, ROLE_USER")
                     .setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                     .signWith(key).compact();

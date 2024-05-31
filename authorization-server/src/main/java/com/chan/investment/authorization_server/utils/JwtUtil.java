@@ -16,8 +16,17 @@ public class JwtUtil {
 
     public String generateToken(String username) {
         SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
+        if(username.equals("admin")){
+            return Jwts.builder().setSubject("Authorization-server")
+                    .claim("username", username)
+                    .claim("authorities", "ROLE_ADMIN")
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                    .signWith(key).compact();
+        }
         return Jwts.builder().setSubject("Authorization-server")
                 .claim("username", username)
+                .claim("authorities", "ROLE_USER")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(key).compact();

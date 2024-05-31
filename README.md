@@ -1,10 +1,11 @@
 # investment-msa-service
 ## 프로젝트 설명
 ### 내용
-* 투자에 도움을 주는 서비스 구현하자
+* 투자에 도움을 주는 서비스를 구현하자
 * Micro Service Architecture를 이용하여 서비스를 구현
   
- <img width="936" alt="image" src="https://github.com/ChaneHaDa/investment-msa-service/assets/140226331/151427c2-c893-4808-b955-a531bb5525ac">
+ ![image](https://github.com/ChaneHaDa/investment-msa-service/assets/140226331/bb84dd44-8f7f-4bd8-af23-725e98c5c24b)
+
 
   
 ### 사용 기술 및 환경
@@ -13,6 +14,7 @@
 * Spring Cloud Config: 환경 외부 설정을 위해서 사용
 * Spring Cloud Gateway: 라우팅 및 통합 Swagger 문서 구성에 사용
 * Spring Cloud Netflix: Eureka 서버를 통해 서비스 발견을 위해 사용
+* Spring Security: 인증 및 인가, JWT 발급을 위해 사용
 
 # Services
 ## cloud-config
@@ -28,6 +30,16 @@
 ## naming-server
 * **PORT:8761**
 * Eureka Server, 서비스 등록 및 확인에 사용
+
+## authorization-server
+* **PORT:9000**
+* 사용자를 관리하고 JWT 토큰을 발급하는 서버
+### Entity
+* Customer(Long id, String username, String password, String role)
+### URLS
+* (POST) /customer
+* (POST) /authenticaion
+* (POST) /authorization
   
 ## securities-service
 * **PORT:8000**
@@ -46,9 +58,10 @@
 
 ## portfolio-service
 * **PORT:8010**
-* 포트폴리오를 담당하는 서비스
+* 사용자의 포트폴리오를 담당하는 서비스
+* 인증 서버로 부터 JWT를 받아와서 사용한다.
 ### Entity
-* Portfolio(Long id, String name, List<PortfolioItem> items)
+* Portfolio(Long id, String name, List<PortfolioItem> items, String username)
 * PortfolioItem(Long id, String stcok, double weight, Portfolio portfolio)
 ### URLS
 * (GET, POST) /portfolio
@@ -56,6 +69,9 @@
 * (GET, POST) /portfolio/{id}/portfolioItem
 * (GET) /portfolioItem
 * (GET, PUT, DELETE) /portfolioItem/{id}
+* (GET, POST) /user/portfolio
+* (GET, PUT, DELETE) /user/portfolio/{id}
+* (GET, POST) /user/portfolio/{id}/portfolioItem
 
 ## portfolio-composition-service
 * **PORT:8040**
@@ -86,5 +102,7 @@
 * (POST) /portfolio-backtest
 ### Service call
 * portfolio-composition-service
+
+
 
 

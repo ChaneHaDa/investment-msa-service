@@ -8,11 +8,14 @@ public class PortfolioDTO {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
+    private String description;
+
     public PortfolioDTO() {
     }
-    public PortfolioDTO(Long id, String name) {
+    public PortfolioDTO(Long id, String name, String description) {
         this.id = id;
         this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
@@ -31,11 +34,19 @@ public class PortfolioDTO {
         this.name = name;
     }
 
-    public static PortfolioDTO fromEntity(Portfolio portfolio) {
-        return new PortfolioDTO(portfolio.getId(), portfolio.getName());
+    public String getDescription() {
+        return description;
     }
 
-    public static Portfolio toEntity(PortfolioDTO portfolioDTO) {
-        return new Portfolio(portfolioDTO.getId(), portfolioDTO.getName());
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public static PortfolioDTO fromEntity(Portfolio portfolio) {
+        return new PortfolioDTO(portfolio.getId(), portfolio.getName(), portfolio.getDescription());
+    }
+
+    public static Portfolio toEntity(PortfolioDTO portfolioDTO, String username) {
+        return new Portfolio(portfolioDTO.getId(), portfolioDTO.getName(), portfolioDTO.getDescription(), username);
     }
 }

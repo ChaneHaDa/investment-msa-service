@@ -19,6 +19,7 @@ public class SecurityConfig {
         );
 
         http.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class);
+        http.csrf().disable();
 
         http.sessionManagement((sessionManagement) ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

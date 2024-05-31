@@ -9,6 +9,7 @@ import com.chan.investment.portfolioservice.jpa.service.PortfolioService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -33,13 +34,14 @@ public class PortfolioController {
     }
 
     @PostMapping("")
-        public List<PortfolioDTO> savePortfolios(@Valid @RequestBody PortfolioDTOWrapper portfolioDTOWrapper) {
-        return portfolioService.savePortfolios(portfolioDTOWrapper.getPortfolioDTOList());
+        public List<PortfolioDTO> savePortfolios(@Valid @RequestBody PortfolioDTOWrapper portfolioDTOWrapper, String username) {
+        return portfolioService.savePortfolios(portfolioDTOWrapper.getPortfolioDTOList(), username);
     }
 
     @PutMapping("/{id}")
-    public PortfolioDTO updatePortfolio(@PathVariable(value = "id") Long id, @Valid @RequestBody PortfolioDTO portfolioDTO) {
-        return portfolioService.updatePortfolio(id, portfolioDTO);
+    public PortfolioDTO updatePortfolio(@PathVariable(value = "id") Long id, @Valid @RequestBody PortfolioDTO portfolioDTO, String username) {
+
+        return portfolioService.updatePortfolio(id, portfolioDTO, username);
     }
 
     @DeleteMapping("/{id}")

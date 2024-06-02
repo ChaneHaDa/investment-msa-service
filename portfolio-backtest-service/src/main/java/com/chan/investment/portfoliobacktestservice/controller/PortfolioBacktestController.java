@@ -20,14 +20,14 @@ public class PortfolioBacktestController {
         this.portfolioBacktestService = portfolioBacktestService;
     }
 
-    @CircuitBreaker(name = "default", fallbackMethod = "hardcodedResponse")
+    @CircuitBreaker(name = "default", fallbackMethod = "createBacktestFallback")
     @PostMapping
-    public PortfolioBacktestReturnDTO createPortfolio(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO) {
+    public PortfolioBacktestReturnDTO createBacktest(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO) {
         return portfolioBacktestService.createBacktestResult(portofolioBacktestInputDTO);
     }
 
-    public String hardcodedResponse(Exception ex) {
-        return "fallback-response";
+    public PortfolioBacktestReturnDTO createBacktestFallback(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO, Exception ex) {
+        throw new RuntimeException("Service is down");
     }
 
 }

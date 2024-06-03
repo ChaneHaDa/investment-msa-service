@@ -2,21 +2,12 @@ version: "3.8"
 
 services:
 
-  config-server:
-    image: xoo0608/cloud-config
+  authorization-server:
+    image: xoo0608/authorization-server
     ports:
-      - "8888:8888"
+      - "9000:9000"
     networks:
       - spring-msa-network
-
-#  authorization-server:
-#    image: xoo0608/authorization-server
-#    ports:
-#      - "9000:9000"
-#    environment:
-#      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-#    networks:
-#      - spring-msa-network
 
   api-gateway:
     image: xoo0608/api-gateway
@@ -24,19 +15,14 @@ services:
       - "8765:8765"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-    depends_on:
-      - naming-server
-    networks:
-      - spring-msa-network
-
-  portfolio-backtest-service:
-    image: xoo0608/portfolio-backtest-service
-    ports:
-      - "8050:8050"
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eurekaw
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRINGDOC_SWAGGER_UI_URLS_0_NAME=securities-service
+      - SPRINGDOC_SWAGGER_UI_URLS_0_URL=http://securities-service:8765/api/securities-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_1_NAME=portfolio-backtest-service
+      - SPRINGDOC_SWAGGER_UI_URLS_1_URL=http://portfolio-backtest-service:8765/api/portfolio-backtest-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_2_NAME=portfolio-composition-service
+      - SPRINGDOC_SWAGGER_UI_URLS_2_URL=http://portfolio-composition-service:8765/api/portfolio-composition-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_3_NAME=portfolio-service
+      - SPRINGDOC_SWAGGER_UI_URLS_3_URL=http://portfolio-service:8765/api/portfolio-service/v3/api-docs
     depends_on:
       - naming-server
     networks:
@@ -46,49 +32,52 @@ services:
     image: xoo0608/naming-server
     ports:
       - "8761:8761"
-    environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-    depends_on:
-      - config-server
     networks:
       - spring-msa-network
 
+  portfolio-backtest-service:
+    image: xoo0608/portfolio-backtest-service
+    ports:
+      - "8050:8050"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    networks:
+      - spring-msa-network
 
-#  portfolio-composition-service:
-#    image: xoo0608/portfolio-composition-service
-#    ports:
-#      - "8040:8040"
-#    environment:
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
-#      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-#    depends_on:
-#      - naming-server
-#    networks:
-#      - spring-msa-network
-#
-#  portfolio-service:
-#    image: xoo0608/portfolio-service
-#    ports:
-#      - "8010:8010"
-#    environment:
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
-#      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-#    depends_on:
-#      - naming-server
-#    networks:
-#      - spring-msa-network
-#
-#  securities-service:
-#    image: xoo0608/securities-service
-#    ports:
-#      - "8000:8000"
-#    environment:
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
-#      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-#    depends_on:
-#      - naming-server
-#    networks:
-#      - spring-msa-network
+  portfolio-composition-service:
+    image: xoo0608/portfolio-composition-service
+    ports:
+      - "8040:8040"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    networks:
+      - spring-msa-network
+
+  portfolio-service:
+    image: xoo0608/portfolio-service
+    ports:
+      - "8010:8010"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    networks:
+      - spring-msa-network
+
+  securities-service:
+    image: xoo0608/securities-service
+    ports:
+      - "8000:8000"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    networks:
+      - spring-msa-network
 
 networks:
   spring-msa-network:

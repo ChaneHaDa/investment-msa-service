@@ -3,6 +3,7 @@ package com.chan.investment.portfoliobacktestservice.controller;
 import com.chan.investment.portfoliobacktestservice.dto.PortfolioBacktestInputDTO;
 import com.chan.investment.portfoliobacktestservice.dto.PortfolioBacktestReturnDTO;
 import com.chan.investment.portfoliobacktestservice.service.PortfolioBacktestService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +20,14 @@ public class PortfolioBacktestController {
         this.portfolioBacktestService = portfolioBacktestService;
     }
 
+    @CircuitBreaker(name = "default", fallbackMethod = "createBacktestFallback")
     @PostMapping
-    public PortfolioBacktestReturnDTO createPortfolio(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO) {
+    public PortfolioBacktestReturnDTO createBacktest(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO) {
         return portfolioBacktestService.createBacktestResult(portofolioBacktestInputDTO);
+    }
+
+    public PortfolioBacktestReturnDTO createBacktestFallback(@Valid @RequestBody PortfolioBacktestInputDTO portofolioBacktestInputDTO, Exception ex) {
+        throw new RuntimeException("Service is down");
     }
 
 }

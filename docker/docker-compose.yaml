@@ -4,6 +4,8 @@ services:
 
   authorization-server:
     image: xoo0608/authorization-server
+    environment:
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     ports:
       - "9000:9000"
     networks:
@@ -16,13 +18,14 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
       - SPRINGDOC_SWAGGER_UI_URLS_0_NAME=securities-service
-      - SPRINGDOC_SWAGGER_UI_URLS_0_URL=http://securities-service:8765/api/securities-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_0_URL=http://localhost:8765/api/securities-service/v3/api-docs
       - SPRINGDOC_SWAGGER_UI_URLS_1_NAME=portfolio-backtest-service
-      - SPRINGDOC_SWAGGER_UI_URLS_1_URL=http://portfolio-backtest-service:8765/api/portfolio-backtest-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_1_URL=http://localhost:8765/api/portfolio-backtest-service/v3/api-docs
       - SPRINGDOC_SWAGGER_UI_URLS_2_NAME=portfolio-composition-service
-      - SPRINGDOC_SWAGGER_UI_URLS_2_URL=http://portfolio-composition-service:8765/api/portfolio-composition-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_2_URL=http://localhost:8765/api/portfolio-composition-service/v3/api-docs
       - SPRINGDOC_SWAGGER_UI_URLS_3_NAME=portfolio-service
-      - SPRINGDOC_SWAGGER_UI_URLS_3_URL=http://portfolio-service:8765/api/portfolio-service/v3/api-docs
+      - SPRINGDOC_SWAGGER_UI_URLS_3_URL=http://localhost:8765/api/portfolio-service/v3/api-docs
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     depends_on:
       - naming-server
     networks:
@@ -35,49 +38,61 @@ services:
     networks:
       - spring-msa-network
 
-  portfolio-backtest-service:
+  portfolio-backtest:
     image: xoo0608/portfolio-backtest-service
     ports:
       - "8050:8050"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     depends_on:
       - naming-server
     networks:
       - spring-msa-network
 
-  portfolio-composition-service:
+  portfolio-composition:
     image: xoo0608/portfolio-composition-service
     ports:
       - "8040:8040"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     depends_on:
       - naming-server
     networks:
       - spring-msa-network
 
-  portfolio-service:
+  portfolio:
     image: xoo0608/portfolio-service
     ports:
       - "8010:8010"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     depends_on:
       - naming-server
     networks:
       - spring-msa-network
 
-  securities-service:
+  securities:
     image: xoo0608/securities-service
     ports:
       - "8000:8000"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin-server:9411/api/v2/spans
     depends_on:
       - naming-server
     networks:
       - spring-msa-network
+
+  zipkin-server:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - spring-msa-network
+    restart: always
 
 networks:
   spring-msa-network:

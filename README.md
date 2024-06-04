@@ -4,8 +4,7 @@
 * 투자에 도움을 주는 서비스를 구현하자
 * Micro Service Architecture를 이용하여 서비스를 구현
   
-<img width="818" alt="image" src="https://github.com/ChaneHaDa/investment-msa-service/assets/140226331/a7141f5c-4097-4505-bb30-df059ae0964b">
-
+![image](https://github.com/ChaneHaDa/investment-msa-service/assets/140226331/ab314375-16bc-425d-b54e-7340dd9dd061)
 
 
   

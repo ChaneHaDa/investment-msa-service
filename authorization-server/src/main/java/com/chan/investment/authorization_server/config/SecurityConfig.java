@@ -19,10 +19,10 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/authorization/customer", "/authenticaion", "/authorization").permitAll()
+                        .requestMatchers("/login", "/customer", "/authenticaion", "/authorization").permitAll()
                         .anyRequest().authenticated()
                 );
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/login", "/authorization/customer", "/authenticaion", "/authorization"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/login", "/customer", "/authenticaion", "/authorization"));
         return http.build();
     }
 
